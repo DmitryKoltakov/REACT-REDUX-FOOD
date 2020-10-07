@@ -26,6 +26,13 @@ const addedToCart = (id) => {
     }
 };
 
+
+const onApplyOrder = () => {
+    return {
+        type: 'CART_SENT_TO_SERVER',
+    }
+};
+
 const deleteFromCart = (id) => {
     return {
         type: 'ITEM_REMOVE_FROM_CART',
@@ -46,5 +53,6 @@ export {
     menuRequested,
     menuError,
     addedToCart,
-    deleteFromCart
+    deleteFromCart,
+    onApplyOrder
 };

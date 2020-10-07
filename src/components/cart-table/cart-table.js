@@ -1,10 +1,12 @@
 import React from 'react';
 import './cart-table.scss';
 import {connect} from 'react-redux';// применяется каждый раз когда нужен стейт из редьюсера
-import {deleteFromCart} from '../../actions'
+import {deleteFromCart} from '../../actions';
+import WithRestoService from '../hoc/with-resto-service';
 //В этот компонент будут передаваться выбранные айтемсы и функция - обработчик вместе с пропсами
-const CartTable = ({items, deleteFromCart, onApplyOrder}) => {// айтемсы будем получать из редьюсера
-    const applyBtn = (items.length > 0)? <button onClick={() => onApplyOrder()} className="cart__apply">Подтвердить заказ</button> : <h2 className="cart__empty">Список товаров пуст</h2>
+const CartTable = ({items, deleteFromCart,RestoService}) => {// айтемсы будем получать из редьюсера
+   
+    // const applyBtn = (items.length > 0)? <button onClick={RestoService.setOrder( generateOrder(items))} className="cart__apply">Подтвердить заказ</button> : <h2 className="cart__empty">Список товаров пуст</h2>
     
     return (
         <>
@@ -35,6 +37,16 @@ const CartTable = ({items, deleteFromCart, onApplyOrder}) => {// айтемсы 
     );
 };
 
+// const generateOrder = (items) => {
+//     const newOrder = items.map(item => {
+//         return {
+//             id: item.id,
+//             qtty: item.amount
+//         }
+//     })
+//     return newOrder;
+// }
+
 const mapStateToProps = ({items}) =>{//в аргументы передается стейт тут из него сразу вытащили айтемсы
     return{//записали стейт в пропсы
         items: items
@@ -50,7 +62,7 @@ const mapStateToProps = ({items}) =>{//в аргументы передаетс�
 // }
 
 const mapDispatchToProps = {
-    deleteFromCart//удалятор приходит из экшонсов. На обработчике он будет запускать редьюсер и передавать в него айди с payload.id
+    deleteFromCart,//удалятор приходит из экшонсов. На обработчике он будет запускать редьюсер и передавать в него айди с payload.id
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(CartTable);
+export default WithRestoService()(connect(mapStateToProps,mapDispatchToProps)(CartTable));

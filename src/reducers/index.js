@@ -94,6 +94,14 @@ const reducer = (state = initialState, action) => {
                 ],
                 total:state.total - state.items[itemIndex].price * state.items[itemIndex].amount
             }
+
+        case 'CART_SENT_TO_SERVER':
+            return {
+                ...state,
+                items: [],
+                total: 0
+            }
+            
         default:
             return state;
 
